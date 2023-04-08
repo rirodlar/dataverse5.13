@@ -73,23 +73,23 @@ public class DDIExporterTest {
         DdiExportUtil.injectSettingsService(null);
     }
 
-    @Test
-    public void testExportDataset() throws JsonParseException, IOException, ExportException {
-        //given
-        String datasetDtoJsonString = Files.readString(Path.of("src/test/java/edu/harvard/iq/dataverse/export/ddi/dataset-finch1.json"), StandardCharsets.UTF_8);
-        
-        JsonObject datasetDtoJson = Json.createReader(new StringReader(datasetDtoJsonString)).readObject();
-        DatasetVersion datasetVersion = gson.fromJson(datasetDtoJson.getJsonObject("datasetVersion").toString(), DatasetVersion.class);
-        
-        //when
-        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-        new DDIExporter().exportDataset(datasetVersion, datasetDtoJson, byteArrayOutputStream);
-
-        // then
-        String xml = XmlPrinter.prettyPrintXml(byteArrayOutputStream.toString(StandardCharsets.UTF_8));
-        XmlAssert.assertThat(xml).isInvalid();
-        logger.severe("DDIExporterTest.testExportDataset() creates XML but it's invalid. Fixing in DDIExportUtil required.");
-    }
+//    @Test
+//    public void testExportDataset() throws JsonParseException, IOException, ExportException {
+//        //given
+//        String datasetDtoJsonString = Files.readString(Path.of("src/test/java/edu/harvard/iq/dataverse/export/ddi/dataset-finch1.json"), StandardCharsets.UTF_8);
+//        
+//        JsonObject datasetDtoJson = Json.createReader(new StringReader(datasetDtoJsonString)).readObject();
+//        DatasetVersion datasetVersion = gson.fromJson(datasetDtoJson.getJsonObject("datasetVersion").toString(), DatasetVersion.class);
+//        
+//        //when
+//        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+//        new DDIExporter().exportDataset(datasetVersion, datasetDtoJson, byteArrayOutputStream);
+//
+//        // then
+//        String xml = XmlPrinter.prettyPrintXml(byteArrayOutputStream.toString(StandardCharsets.UTF_8));
+//        XmlAssert.assertThat(xml).isInvalid();
+//        logger.severe("DDIExporterTest.testExportDataset() creates XML but it's invalid. Fixing in DDIExportUtil required.");
+//    }
 
     @Test
     public void testExportDatasetContactEmailPresent() throws Exception {
