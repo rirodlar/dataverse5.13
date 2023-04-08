@@ -110,12 +110,12 @@
                             </ul>
                         </li>
                         <ui:fragment rendered="#{!dataverseSession.user.authenticated}">
-<!--                            <li>
+                            <li>
                                 <h:outputLink rendered="#{dataverseHeaderFragment.signupAllowed}"
                                               value="#{dataverseHeaderFragment.getSignupUrl(navigationWrapper.redirectPage)}">
                                     #{bundle['header.signUp']}
                                 </h:outputLink>
-                            </li>-->
+                            </li>
                             <li>
                                 <h:outputLink value="/loginpage.xhtml?#{loginRedirectPage}">
                                     #{bundle.login}
