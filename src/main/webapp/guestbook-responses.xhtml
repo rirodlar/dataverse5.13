@@ -92,6 +92,16 @@
                             <br />
                             </ui:repeat>
                         </p:column>
+                         <ui:repeat value="#{response}" var="customQResponse">
+                            <p:column headerText="R2" >
+
+                                <b><h:outputText value="#{customQResponse[0]}"/>: </b>
+                                <h:outputText escape="false" value="#{customQResponse[1]}"/>
+                                <br />
+
+                            </p:column>
+                              </ui:repeat>
+                        
                     </p:dataTable>
                 </h:form>
             </ui:define>

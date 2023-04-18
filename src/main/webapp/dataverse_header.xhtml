@@ -71,7 +71,7 @@
                         </li>
                         <li jsf:rendered="#{!empty settingsWrapper.get(':NavbarAboutUrl')}">
                             <h:outputLink value="#{settingsWrapper.get(':NavbarAboutUrl')}" target="_blank" rel="noopener">
-                                <h:outputText value="#{bundle['header.about']}"/>
+                             TEST-   <h:outputText value="#{bundle['header.about']}"/>
                             </h:outputLink>
                         </li>
                         <li>
@@ -110,12 +110,12 @@
                             </ul>
                         </li>
                         <ui:fragment rendered="#{!dataverseSession.user.authenticated}">
-<!--                            <li>
+                            <li>
                                 <h:outputLink rendered="#{dataverseHeaderFragment.signupAllowed}"
                                               value="#{dataverseHeaderFragment.getSignupUrl(navigationWrapper.redirectPage)}">
                                     #{bundle['header.signUp']}
                                 </h:outputLink>
-                            </li>-->
+                            </li>
                             <li>
                                 <h:outputLink value="/loginpage.xhtml?#{loginRedirectPage}">
                                     #{bundle.login}
