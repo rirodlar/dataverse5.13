@@ -187,7 +187,7 @@ public class DataverseSession implements Serializable{
     
     // Language Locale methods: 
     
-    private String localeCode;
+    private String localeCode = "es";
     
     public String getLocaleCode() {
         if (localeCode == null) {
