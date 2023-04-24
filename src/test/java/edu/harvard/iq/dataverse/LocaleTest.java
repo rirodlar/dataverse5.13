@@ -23,7 +23,7 @@ public class LocaleTest {
         System.out.println("user.region="+l.getCountry());
         System.out.println("user.timezone="+tz.getDefault().getID());
         
-        assertThat(l.getLanguage(), equalTo("en"));
+        assertThat(l.getLanguage(), equalTo("es"));
         assertThat(l.getCountry(), equalTo("US"));
         assertThat(tz.getID(), equalTo("UTC"));
     }
