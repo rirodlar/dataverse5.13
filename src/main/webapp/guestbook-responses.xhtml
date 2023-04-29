@@ -87,9 +87,16 @@
                         </p:column>
                         <p:column headerText="#{bundle['dataset.guestbooksResponses.customQuestions']}" >
                             <ui:repeat value="#{response[5]}" var="customQResponse">
-                            <b><h:outputText value="#{customQResponse[0]}"/>: </b>
-                            <h:outputText escape="false" value="#{customQResponse[1]}"/>
-                            <br />
+                                <b><h:outputText value="#{customQResponse[0]}"/>: </b>
+<!--                                <h:outputText escape="false" value="#{customQResponse[1]}"/>-->
+                                <br />
+                            </ui:repeat>
+                        </p:column>
+                           <p:column headerText="#{bundle['dataset.guestbooksResponses.customQuestions']}" >
+                            <ui:repeat value="#{response[5]}" var="customQResponse">
+<!--                                <b><h:outputText value="#{customQResponse[0]}"/>: </b>-->
+                                <h:outputText escape="false" value="#{customQResponse[1]}"/>
+                                <br />
                             </ui:repeat>
                         </p:column>
                          <ui:repeat value="#{response}" var="customQResponse">
