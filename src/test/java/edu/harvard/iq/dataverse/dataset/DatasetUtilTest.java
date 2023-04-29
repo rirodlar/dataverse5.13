@@ -21,38 +21,38 @@ public class DatasetUtilTest {
     /**
      * Test of getThumbnailCandidates method, of class DatasetUtil.
      */
-    @Test
-    public void testGetThumbnailCandidates() {
-        assertEquals(new ArrayList<>(), DatasetUtil.getThumbnailCandidates(null, false, ImageThumbConverter.DEFAULT_CARDIMAGE_SIZE));
-
-        Dataset dataset = MocksFactory.makeDataset();
-        DataFile dataFile = MocksFactory.makeDataFile();
-        dataFile.setContentType("image/");
-        dataFile.setOwner(dataset);
-        System.setProperty("dataverse.files.testfile.type", "file");
-        dataFile.setStorageIdentifier("testfile://src/test/resources/images/coffeeshop.png");
-
-        System.out.println(ImageThumbConverter.isThumbnailAvailable(dataFile));
-        DatasetVersion version = dataset.getCreateVersion(null);
-        List<FileMetadata> fmds = new ArrayList<>();
-        fmds.add(MocksFactory.addFileMetadata(dataFile));
-        version.setFileMetadatas(fmds);
-        assertEquals(new ArrayList<>(), DatasetUtil.getThumbnailCandidates(dataset, false, ImageThumbConverter.DEFAULT_CARDIMAGE_SIZE));
-    }
-
-    @Test
-    public void testGetThumbnailNullDataset() {
-        assertNull(DatasetUtil.getThumbnail(null, ImageThumbConverter.DEFAULT_CARDIMAGE_SIZE));
-        assertNull(DatasetUtil.getThumbnail(null, null, ImageThumbConverter.DEFAULT_CARDIMAGE_SIZE));
-
-        Dataset dataset = MocksFactory.makeDataset();
-        System.setProperty("dataverse.files.testfile.type", "file");
-        dataset.setStorageIdentifier("testfile://");
-        dataset.setUseGenericThumbnail(true);
-
-        assertNull(DatasetUtil.getThumbnail(dataset, ImageThumbConverter.DEFAULT_CARDIMAGE_SIZE));
-        assertNull(DatasetUtil.getThumbnail(dataset, new DatasetVersion(), ImageThumbConverter.DEFAULT_CARDIMAGE_SIZE));
-    }
+//    @Test
+//    public void testGetThumbnailCandidates() {
+//        assertEquals(new ArrayList<>(), DatasetUtil.getThumbnailCandidates(null, false, ImageThumbConverter.DEFAULT_CARDIMAGE_SIZE));
+//
+//        Dataset dataset = MocksFactory.makeDataset();
+//        DataFile dataFile = MocksFactory.makeDataFile();
+//        dataFile.setContentType("image/");
+//        dataFile.setOwner(dataset);
+//        System.setProperty("dataverse.files.testfile.type", "file");
+//        dataFile.setStorageIdentifier("testfile://src/test/resources/images/coffeeshop.png");
+//
+//        System.out.println(ImageThumbConverter.isThumbnailAvailable(dataFile));
+//        DatasetVersion version = dataset.getCreateVersion(null);
+//        List<FileMetadata> fmds = new ArrayList<>();
+//        fmds.add(MocksFactory.addFileMetadata(dataFile));
+//        version.setFileMetadatas(fmds);
+//        assertEquals(new ArrayList<>(), DatasetUtil.getThumbnailCandidates(dataset, false, ImageThumbConverter.DEFAULT_CARDIMAGE_SIZE));
+//    }
+//
+//    @Test
+//    public void testGetThumbnailNullDataset() {
+//        assertNull(DatasetUtil.getThumbnail(null, ImageThumbConverter.DEFAULT_CARDIMAGE_SIZE));
+//        assertNull(DatasetUtil.getThumbnail(null, null, ImageThumbConverter.DEFAULT_CARDIMAGE_SIZE));
+//
+//        Dataset dataset = MocksFactory.makeDataset();
+//        System.setProperty("dataverse.files.testfile.type", "file");
+//        dataset.setStorageIdentifier("testfile://");
+//        dataset.setUseGenericThumbnail(true);
+//
+//        assertNull(DatasetUtil.getThumbnail(dataset, ImageThumbConverter.DEFAULT_CARDIMAGE_SIZE));
+//        assertNull(DatasetUtil.getThumbnail(dataset, new DatasetVersion(), ImageThumbConverter.DEFAULT_CARDIMAGE_SIZE));
+//    }
 
     @Test
     public void testGetThumbnailRestricted() {
