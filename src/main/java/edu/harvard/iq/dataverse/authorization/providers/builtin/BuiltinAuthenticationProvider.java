@@ -1,5 +1,7 @@
 package edu.harvard.iq.dataverse.authorization.providers.builtin;
 
+import edu.harvard.iq.dataverse.RestUsachServiceBean;
+import edu.harvard.iq.dataverse.api.dto.ResponseApiAcademico;
 import edu.harvard.iq.dataverse.authorization.AuthenticatedUserDisplayInfo;
 import edu.harvard.iq.dataverse.authorization.AuthenticationProviderDisplayInfo;
 import edu.harvard.iq.dataverse.authorization.AuthenticationRequest;
@@ -8,9 +10,8 @@ import edu.harvard.iq.dataverse.authorization.AuthenticationServiceBean;
 import edu.harvard.iq.dataverse.authorization.CredentialsAuthenticationProvider;
 import java.util.Arrays;
 import java.util.List;
-import static edu.harvard.iq.dataverse.authorization.CredentialsAuthenticationProvider.Credential;
+
 import edu.harvard.iq.dataverse.authorization.users.AuthenticatedUser;
-import edu.harvard.iq.dataverse.passwordreset.PasswordResetException;
 import edu.harvard.iq.dataverse.util.BundleUtil;
 import edu.harvard.iq.dataverse.validation.PasswordValidatorServiceBean;
 
@@ -37,9 +38,12 @@ public class BuiltinAuthenticationProvider implements CredentialsAuthenticationP
     final AuthenticationServiceBean authBean;
     private PasswordValidatorServiceBean passwordValidatorService;
 
-    public BuiltinAuthenticationProvider( BuiltinUserServiceBean aBean, PasswordValidatorServiceBean passwordValidatorService, AuthenticationServiceBean auBean  ) {
+    final RestUsachServiceBean restUsachServiceBean;
+
+    public BuiltinAuthenticationProvider( BuiltinUserServiceBean aBean, PasswordValidatorServiceBean passwordValidatorService, AuthenticationServiceBean auBean, RestUsachServiceBean restUsachServiceBean) {
         this.bean = aBean;
         this.authBean = auBean;
+        this.restUsachServiceBean = restUsachServiceBean;
         this.passwordValidatorService = passwordValidatorService;
         CREDENTIALS_LIST = Arrays.asList(new Credential(KEY_USERNAME_OR_EMAIL), new Credential(KEY_PASSWORD, true));
     }
@@ -99,51 +103,79 @@ public class BuiltinAuthenticationProvider implements CredentialsAuthenticationP
 
     @Override
     public AuthenticationResponse authenticate( AuthenticationRequest authReq ) {
-        BuiltinUser u = bean.findByUserName(authReq.getCredential(KEY_USERNAME_OR_EMAIL) );
-        AuthenticatedUser authUser = null;
+        //BuiltinUser u = bean.findByUserName(authReq.getCredential(KEY_USERNAME_OR_EMAIL) );
+        AuthenticatedUser authUser  = authBean.getAuthenticatedUser(authReq.getCredential(KEY_USERNAME_OR_EMAIL));
+//        if(authUser == null){
+//            return AuthenticationResponse.makeFail("User Not Found");
+//        }
+//        BuiltinUser u = bean.findByUserName(authUser.getUserIdentifier());
+//
+//        authUser = authBean.getAuthenticatedUser(authReq.getCredential(KEY_USERNAME_OR_EMAIL));
+
+//        if(u == null) { //If can't find by username in builtin, get the auth user and then the builtin
+//            authUser = authBean.getAuthenticatedUserByEmail(authReq.getCredential(KEY_USERNAME_OR_EMAIL));
+//            if (authUser == null) { //if can't find by email return bad username, etc.
+//                return AuthenticationResponse.makeFail("Bad username, email address, or password");
+//            }
+//            u = bean.findByUserName(authUser.getUserIdentifier());
+//        }
+
+
+      //  if ( u == null ) return AuthenticationResponse.makeFail("Bad username, email address, or password");
         
-        if(u == null) { //If can't find by username in builtin, get the auth user and then the builtin
-            authUser = authBean.getAuthenticatedUserByEmail(authReq.getCredential(KEY_USERNAME_OR_EMAIL));
-            if (authUser == null) { //if can't find by email return bad username, etc.
-                return AuthenticationResponse.makeFail("Bad username, email address, or password");
-            }
-            u = bean.findByUserName(authUser.getUserIdentifier());
-        }
-        
-        if ( u == null ) return AuthenticationResponse.makeFail("Bad username, email address, or password");
-        
-        boolean userAuthenticated = PasswordEncryption.getVersion(u.getPasswordEncryptionVersion())
-                                            .check(authReq.getCredential(KEY_PASSWORD), u.getEncryptedPassword() );
-        if ( ! userAuthenticated ) {
-            return AuthenticationResponse.makeFail("Bad username or password");
-        }
-        
-        
-        if ( u.getPasswordEncryptionVersion() < PasswordEncryption.getLatestVersionNumber() ) {
+//        boolean userAuthenticated = PasswordEncryption.getVersion(u.getPasswordEncryptionVersion())
+//                                            .check(authReq.getCredential(KEY_PASSWORD), u.getEncryptedPassword() );
+
+       // if(!authUser.isSuperuser()) {
+        ResponseApiAcademico responseApiAcademico = new ResponseApiAcademico();
+        String user = authReq.getCredential(KEY_USERNAME_OR_EMAIL);
+        String password = authReq.getCredential(KEY_PASSWORD);
             try {
-                String passwordResetUrl = bean.requestPasswordUpgradeLink(u);
-                
-                return AuthenticationResponse.makeBreakout(u.getUserName(), passwordResetUrl);
-            } catch (PasswordResetException ex) {
-                return AuthenticationResponse.makeError("Error while attempting to upgrade password", ex);
+                 responseApiAcademico =  restUsachServiceBean.validateUser(user, password);
+//                if (!responseLdapDto.isSuccess()) {
+//                    return AuthenticationResponse.makeFail("Error Ldap");
+//                }
+            } catch (Exception e) {
+                // throw new RuntimeException(e);
+                return AuthenticationResponse.makeError("Error Validate", e);
             }
-//        } else {
-//            return AuthenticationResponse.makeSuccess(u.getUserName(), u.getDisplayInfo());
-        }
-        final List<String> errors = passwordValidatorService.validate(authReq.getCredential(KEY_PASSWORD));
-        if (!errors.isEmpty()) {
-            try {
-                String passwordResetUrl = bean.requestPasswordComplianceLink(u);
-                return AuthenticationResponse.makeBreakout(u.getUserName(), passwordResetUrl);
-            } catch (PasswordResetException ex) {
-                return AuthenticationResponse.makeError("Error while attempting to upgrade password", ex);
-            }
-        }
-        if(null == authUser) {
-            authUser = authBean.getAuthenticatedUser(u.getUserName());
-        }
+      //  }
+//        if ( ! userAuthenticated ) {
+//            return AuthenticationResponse.makeFail("Bad username or password");
+//        }
         
-        return AuthenticationResponse.makeSuccess(u.getUserName(), authUser.getDisplayInfo());
+//
+//        if ( u.getPasswordEncryptionVersion() < PasswordEncryption.getLatestVersionNumber() ) {
+//            try {
+//                String passwordResetUrl = bean.requestPasswordUpgradeLink(u);
+//
+//                return AuthenticationResponse.makeBreakout(u.getUserName(), passwordResetUrl);
+//            } catch (PasswordResetException ex) {
+//                return AuthenticationResponse.makeError("Error while attempting to upgrade password", ex);
+//            }
+////        } else {
+////            return AuthenticationResponse.makeSuccess(u.getUserName(), u.getDisplayInfo());
+//        }
+       // final List<String> errors = passwordValidatorService.validate(authReq.getCredential(KEY_PASSWORD));
+//        if (!errors.isEmpty()) {
+//            try {
+//                String passwordResetUrl = bean.requestPasswordComplianceLink(u);
+//                return AuthenticationResponse.makeBreakout(u.getUserName(), passwordResetUrl);
+//            } catch (PasswordResetException ex) {
+//                return AuthenticationResponse.makeError("Error while attempting to upgrade password", ex);
+//            }
+//        }
+//        if(null == authUser) {
+//            authUser = authBean.getAuthenticatedUser(u.getUserName());
+//        }
+        AuthenticatedUserDisplayInfo authenticatedUserDisplayInfo = new AuthenticatedUserDisplayInfo(
+                responseApiAcademico.getNombres(),
+                responseApiAcademico.getPrimerApellido(),
+                responseApiAcademico.getEmail(),
+                responseApiAcademico.getAffiliation(),
+                responseApiAcademico.getPlanta());
+       // return AuthenticationResponse.makeSuccess(u.getUserName(), authUser.getDisplayInfo());
+        return AuthenticationResponse.makeSuccess(user, authenticatedUserDisplayInfo);
    }
 
     @Override

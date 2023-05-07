@@ -11,6 +11,16 @@ public class ResponseApiAcademico {
     private int codigoUnidadMayorContrato;
     private String nombreUnidadMayorContrato;
 
+    private String affiliation;
+
+    public String getAffiliation() {
+        return affiliation;
+    }
+
+    public void setAffiliation(String affiliation) {
+        this.affiliation = affiliation;
+    }
+
     public String getRun() {
         return run;
     }

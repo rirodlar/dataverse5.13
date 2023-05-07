@@ -110,6 +110,16 @@ public class LoginPage implements java.io.Serializable {
     long op2;
     Long userSum;
 
+    private String messageErrorLogin;
+
+    public String getMessageErrorLogin() {
+        return messageErrorLogin;
+    }
+
+    public void setMessageErrorLogin(String messageErrorLogin) {
+        this.messageErrorLogin = messageErrorLogin;
+    }
+
     public void init() {
         Iterator<String> credentialsIterator = authSvc.getAuthenticationProviderIdsOfType( CredentialsAuthenticationProvider.class ).iterator();
         if ( credentialsIterator.hasNext() ) {
@@ -189,6 +199,9 @@ public class LoginPage implements java.io.Serializable {
 
             
         } catch (AuthenticationFailedException ex) {
+
+            this.messageErrorLogin = ex.getResponse().getError().getMessage().toString();
+
             numFailedLoginAttempts++;
             op1 = new Long(random.nextInt(10));
             op2 = new Long(random.nextInt(10));

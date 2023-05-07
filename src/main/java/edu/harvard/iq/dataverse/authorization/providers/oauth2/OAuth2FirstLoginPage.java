@@ -1,6 +1,7 @@
 package edu.harvard.iq.dataverse.authorization.providers.oauth2;
 
 import edu.harvard.iq.dataverse.DataverseSession;
+import edu.harvard.iq.dataverse.RestUsachServiceBean;
 import edu.harvard.iq.dataverse.validation.EMailValidator;
 import edu.harvard.iq.dataverse.UserNotification;
 import edu.harvard.iq.dataverse.UserNotificationServiceBean;
@@ -69,6 +70,9 @@ public class OAuth2FirstLoginPage implements java.io.Serializable {
 
     @EJB
     OAuth2TokenDataServiceBean oauth2Tokens;
+
+    @EJB
+    RestUsachServiceBean restUsachServiceBean;
     
     @Inject
     DataverseSession session;
@@ -202,7 +206,7 @@ public class OAuth2FirstLoginPage implements java.io.Serializable {
     }
 
     public String convertExistingAccount() {
-        BuiltinAuthenticationProvider biap = new BuiltinAuthenticationProvider(builtinUserSvc, passwordValidatorService, authenticationSvc);
+        BuiltinAuthenticationProvider biap = new BuiltinAuthenticationProvider(builtinUserSvc, passwordValidatorService, authenticationSvc, restUsachServiceBean);
         AuthenticationRequest auReq = new AuthenticationRequest();
         final List<CredentialsAuthenticationProvider.Credential> creds = biap.getRequiredCredentials();
         auReq.putCredential(creds.get(0).getKey(), getUsername());
