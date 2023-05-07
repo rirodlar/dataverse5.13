@@ -37,7 +37,7 @@ public class RestUsachServiceBean extends AbstractApiBean implements java.io.Ser
     public static final String KEY_CREATE_USER = "builtInS3kretKey=123";
     public static final String AUTHORIZATION = "Authorization";
     public static final String URI_PATH = "http://localhost:8080";
-    public static final String API_TOKEN = "499a5e23-9c66-4f28-b69a-6c75ef5d5a47";
+    public static final String API_TOKEN = "f1cc4c86-839b-4b59-bd3f-34e3be3f0416";
     public static final String ROL_DS_CONTRIBUTOR = "dsContributor";
     public static final String URL_LDAP_SEGIC = "https://cuentas.segic.cl/api/cuenta/check";
     public static final String URL_LDAP_SEGIC_MOCK = "https://run.mocky.io/v3/0b9582f8-6240-44fd-9f5f-dcba6f702d04/";
