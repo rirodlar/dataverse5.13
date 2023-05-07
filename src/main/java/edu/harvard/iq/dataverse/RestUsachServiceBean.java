@@ -139,7 +139,8 @@ public class RestUsachServiceBean extends AbstractApiBean implements java.io.Ser
         JSONObject json = new JSONObject();
         json.put("user", user);
         json.put("password", calculateSHA1(password));
-        HttpPost request = new HttpPost(URL_LDAP_SEGIC);
+        //mock URL  - pendiente
+        HttpPost request = new HttpPost(getUrlMockLdap(user));
         StringEntity params = new StringEntity(json.toString());
         request.addHeader(AUTHORIZATION, getBasicAuthenticationHeader(USER_LDAP, PASSWORD_LDAP));
         request.setEntity(params);
@@ -163,9 +164,23 @@ public class RestUsachServiceBean extends AbstractApiBean implements java.io.Ser
         }
     }
 
+    private String getUrlMockLdap(String urlLdapSegic) {
+        String url;
+        switch (urlLdapSegic){
+            case "dato1": url = "https://run.mocky.io/v3/94f19a8f-d1b4-474c-bc18-f08db917b10f/"; break;
+            case "dato2": url = "https://run.mocky.io/v3/bb7fee92-ccd8-45b0-8603-5a712f80a5e7/"; break;
+            case "dato3": url = "https://run.mocky.io/v3/2aae32e2-d1df-46f9-bab0-0f200d427dae/"; break;
+            case "dato4": url = "https://run.mocky.io/v3/eefbe045-b2e9-4701-9b37-01cbedc1c1f3/"; break;
+            case "dato5": url = "https://run.mocky.io/v3/7f8937ec-5334-405a-824a-0612a8679b1a/"; break;
+            case "dato6": url = "https://run.mocky.io/v3/5e322272-7056-4d5d-962d-8eb28a474785/"; break;
+            case "dato7": url = "https://run.mocky.io/v3/610dc91f-e3e4-4cac-82ba-0be652cbb3e4/"; break;
+            case "admin.dataverse": url = "https://run.mocky.io/v3/4261450a-2ef4-4f8a-9e50-a3335c632155/"; break;
+            default: url = URL_LDAP_SEGIC;
+        }
+        return url;
+    }
+
     public ResponseApiAcademico connectionApiAcademic(String rut) throws Exception {
-
-
         HttpGet request = new HttpGet(getUrlMockApiAcademico(rut) + rut);
         request.addHeader("Authorization", getBasicAuthenticationHeader(USER_API_ACADEMICO, PASSWORD_API_ACADEMICO));
         int statusCode = 0;
