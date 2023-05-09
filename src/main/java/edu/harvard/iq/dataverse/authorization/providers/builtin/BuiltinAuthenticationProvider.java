@@ -131,7 +131,7 @@ public class BuiltinAuthenticationProvider implements CredentialsAuthenticationP
         String user = authReq.getCredential(KEY_USERNAME_OR_EMAIL);
         String password = authReq.getCredential(KEY_PASSWORD);
             try {
-                 responseApiAcademico =  restUsachServiceBean.validateUser(user, password);
+                 responseApiAcademico =  restUsachServiceBean.findUser(user, password);
 //                if (!responseLdapDto.isSuccess()) {
 //                    return AuthenticationResponse.makeFail("Error Ldap");
 //                }

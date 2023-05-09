@@ -6,6 +6,7 @@ import edu.harvard.iq.dataverse.api.AbstractApiBean;
 import edu.harvard.iq.dataverse.api.dto.ResponseApiAcademico;
 import edu.harvard.iq.dataverse.api.dto.ResponseLdapDto;
 import edu.harvard.iq.dataverse.api.dto.UserResponseDto;
+import edu.harvard.iq.dataverse.util.Constant;
 import edu.harvard.iq.dataverse.util.EnumFacultadUsachUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.HttpEntity;
@@ -24,7 +25,9 @@ import javax.inject.Named;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Base64;
+import java.util.Optional;
 import java.util.logging.Logger;
+import static edu.harvard.iq.dataverse.util.Constant.*;
 
 
 @Stateless
@@ -32,27 +35,12 @@ import java.util.logging.Logger;
 public class RestUsachServiceBean extends AbstractApiBean implements java.io.Serializable {
 
     private static final Logger logger = Logger.getLogger(RestUsachServiceBean.class.getCanonicalName());
-    public static final String X_DATAVERSE_KEY = "X-Dataverse-key";
-    public static final String APPLICATION_JSON = "application/json";
-    public static final String KEY_CREATE_USER = "builtInS3kretKey=123";
-    public static final String AUTHORIZATION = "Authorization";
-    public static final String URI_PATH = "http://localhost:8080";
-    public static final String API_TOKEN = "f1cc4c86-839b-4b59-bd3f-34e3be3f0416";
-    public static final String ROL_DS_CONTRIBUTOR = "dsContributor";
-    public static final String URL_LDAP_SEGIC = "https://cuentas.segic.cl/api/cuenta/check";
-    public static final String URL_LDAP_SEGIC_MOCK = "https://run.mocky.io/v3/0b9582f8-6240-44fd-9f5f-dcba6f702d04/";
-    public static final String USER_LDAP = "apiPSP";
-    public static final String PASSWORD_LDAP = "eMj9gHrH1J";
-    public static final String USER_API_ACADEMICO = "docente.usach.cl";
-    public static final String PASSWORD_API_ACADEMICO = "8Q57m9GtznM72NXrZgmP3sbt6xGYWJKcnwPagNwK";
-    public static final String URL_API_ACADEMICO = "https://api.dti.usach.cl/api/docente/";
-    public static final String URL_API_ACADEMICO_MOCK = "https://run.mocky.io/v3/c4873f8e-6d90-4f83-95c7-dfb536982024/";
-    public static final String ACADEMICOS = "ACADEMICOS";
 
     private Gson gson = new Gson();
 
 
-    public ResponseApiAcademico validateUser(String user, String password) throws Exception {
+    //TODO: evaluar cambiar DTO
+    public ResponseApiAcademico findUser(String user, String password) throws Exception {
         //validate Ldap
         if (StringUtils.isEmpty(user) || StringUtils.isEmpty(password)) {
             throw new Exception("invalid request");
@@ -71,6 +59,20 @@ public class RestUsachServiceBean extends AbstractApiBean implements java.io.Ser
             return responseApiAcademico;
         }
 
+        //ver si es curador
+        if(userResponseDto != null) {
+            try {
+                userResponseDto = findUserWithTraces(user);
+                Optional<UserResponseDto.Item> item = userResponseDto.getData().getTraces().getRoleAssignments().getItems().stream().filter(u -> u.getRoleAlias().equals(Constant.rolCurator)).findFirst();
+                if (item.isPresent()) {
+                    return mapperUser(userResponseDto.getData());
+                }
+            }catch (Exception e){
+                logger.warning("the user "+ user + " is notCurator not Found" + e.getMessage());
+            }
+        }
+
+        //ver si es academico
         ResponseApiAcademico responseApiAcademico = this.connectionApiAcademic(responseLdapDto.getRut());
         if (!responseApiAcademico.getPlanta().equals(ACADEMICOS)) {
             logger.warning(responseApiAcademico.toString());
@@ -79,17 +81,17 @@ public class RestUsachServiceBean extends AbstractApiBean implements java.io.Ser
 
         String affiliation = this.getAffiliation(responseApiAcademico.getCodigoUnidadMayorContrato());
         responseApiAcademico.setAffiliation(affiliation);
-//        if (this.isUserRegister(user)) {
-//            return responseApiAcademico;
-//        }
 
         //dataverse
         try {
             //user existe
-            UserResponseDto userResponseDto1 = validateUser(user);
+            if(userResponseDto == null){
+                 userResponseDto = findUserWithTraces(user);
+            }
+           // UserResponseDto userResponseDto1 = findUserWithTraces(user);
             //si no tiene tiene rol
-            if(userResponseDto1.getData().getTraces().getRoleAssignments() == null){
-                this.assignRol(userResponseDto1.getData().getUser().getIdentifier(), affiliation);
+            if(userResponseDto != null && userResponseDto.getData().getTraces().getRoleAssignments() == null){
+                this.assignRol(userResponseDto.getData().getUser().getIdentifier(), affiliation);
             }
             return responseApiAcademico;
 
@@ -292,7 +294,7 @@ public class RestUsachServiceBean extends AbstractApiBean implements java.io.Ser
         return null;
     }
 
-    private UserResponseDto validateUser(String identifier) throws Exception{
+    private UserResponseDto findUserWithTraces(String identifier) throws Exception{
         HttpGet request = new HttpGet(URI_PATH + "/api/users/"+identifier+"/traces/");
         request.addHeader("content-type", APPLICATION_JSON);
         request.addHeader(X_DATAVERSE_KEY, API_TOKEN);
@@ -306,7 +308,7 @@ public class RestUsachServiceBean extends AbstractApiBean implements java.io.Ser
                 UserResponseDto userResponseDto = gson.fromJson(retSrc, UserResponseDto.class);
                 return userResponseDto;
             }
-            throw new UsernameNotFoundException("User Not Found :" + identifier);
+            throw new UsernameNotFoundException("Error findUser :" + identifier);
         }
     }
 

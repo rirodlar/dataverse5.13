@@ -187,6 +187,15 @@ public class UserResponseDto {
         private int definitionPointId;
         private String dsContributor;
         private String roleName;
+        private String roleAlias;
+
+        public String getRoleAlias() {
+            return roleAlias;
+        }
+
+        public void setRoleAlias(String roleAlias) {
+            this.roleAlias = roleAlias;
+        }
 
         public int getId() {
             return id;
