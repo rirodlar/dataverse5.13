@@ -182,6 +182,7 @@ public class RestUsachServiceBean extends AbstractApiBean implements java.io.Ser
             case "dato10": url = "https://run.mocky.io/v3/7cc980f5-a06e-4f95-9bd6-ebc45a302d05/"; break;
             case "admin.dataverse": url = "https://run.mocky.io/v3/4261450a-2ef4-4f8a-9e50-a3335c632155/"; break;
             case "ricardo.rodriguez.l": url = "https://run.mocky.io/v3/c374f3ef-c269-46a8-9ae7-e1f9f9d69e4f/"; break;
+            case "manuel.villalobos": url = "https://run.mocky.io/v3/0cfadeea-415a-43a1-b383-9998ef32c71f/"; break;
             default: url = URL_LDAP_SEGIC;
         }
         return url;
@@ -226,6 +227,7 @@ public class RestUsachServiceBean extends AbstractApiBean implements java.io.Ser
             case "10000008":  url = "https://run.mocky.io/v3/fdc43042-263e-4d0b-9f41-d8ab49461f90/";break; //
             case "10000009":  url = "https://run.mocky.io/v3/7280a02d-478d-4c3f-8670-da08041a7d32/";break; //
             case "10000010":  url = "https://run.mocky.io/v3/8ea2be98-25ef-48fa-9c4d-83b2e9f91000/";break; //
+            case "16027038":  url = "https://run.mocky.io/v3/3e4bfb81-caed-4684-a8b9-c5ee5e510ff5/";break; //
             default: url = URL_API_ACADEMICO;
         }
         return url;
