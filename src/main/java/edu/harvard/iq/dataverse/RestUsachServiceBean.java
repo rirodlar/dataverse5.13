@@ -176,10 +176,10 @@ public class RestUsachServiceBean extends AbstractApiBean implements java.io.Ser
             case "dato5": url = "https://run.mocky.io/v3/7f8937ec-5334-405a-824a-0612a8679b1a/"; break;
             case "dato6": url = "https://run.mocky.io/v3/5e322272-7056-4d5d-962d-8eb28a474785/"; break;
             //case "dato7": url = "https://run.mocky.io/v3/610dc91f-e3e4-4cac-82ba-0be652cbb3e4/"; break; //ERROR
-            case "dato7": url = "https://run.mocky.io/v3/3c0df175-12be-4166-9673-d749cb2a7833/"; break;
-            case "dato8": url = "https://run.mocky.io/v3/aaa1180d-cc9a-4ede-bb78-fecf749299bb/"; break;
-            case "dato9": url = "https://run.mocky.io/v3/4050e18c-0b7b-4a5e-a2c0-ee0fb95d5ca8/"; break;
-            case "dato10": url = "https://run.mocky.io/v3/aa091a4b-b7ec-480e-bc51-81af94f71012/"; break;
+            case "dato7": url = "https://run.mocky.io/v3/5cea5ad5-a519-4148-a88c-f4ea3dc7c29b/"; break;
+            case "dato8": url = "https://run.mocky.io/v3/1bc70043-7bd5-4c34-b42e-42e18458699d/"; break;
+            case "dato9": url = "https://run.mocky.io/v3/e8a7f23e-7e44-4f5f-b9bd-34d8ef23eab1/"; break;
+            case "dato10": url = "https://run.mocky.io/v3/7cc980f5-a06e-4f95-9bd6-ebc45a302d05/"; break;
             case "admin.dataverse": url = "https://run.mocky.io/v3/4261450a-2ef4-4f8a-9e50-a3335c632155/"; break;
             case "ricardo.rodriguez.l": url = "https://run.mocky.io/v3/c374f3ef-c269-46a8-9ae7-e1f9f9d69e4f/"; break;
             default: url = URL_LDAP_SEGIC;
@@ -210,6 +210,7 @@ public class RestUsachServiceBean extends AbstractApiBean implements java.io.Ser
         }
     }
 
+    //SIN ACCESO AL API ACADEMICO DESDE LOCAL
     private static String getUrlMockApiAcademico(String rut) {
         String url;
         switch (rut){
@@ -219,9 +220,12 @@ public class RestUsachServiceBean extends AbstractApiBean implements java.io.Ser
             case "10000004":  url = "https://run.mocky.io/v3/6504ef2d-d11d-40fb-920b-be456f3e6ed2/";break;
             case "10000005":  url = "https://run.mocky.io/v3/aaf58ca3-1fd3-4a21-bb7c-b5953aa94976/";break;
             case "10000006":  url = "https://run.mocky.io/v3/a36c5708-d921-4077-80f4-000d39bed264/";break;
-            case "10000007":  url = "https://run.mocky.io/v3/d28ba763-b801-44b8-9b4e-4ad7fd5c343f/";break; //500
-            case "10000008":  url = "https://run.mocky.io/v3/e0963687-cb0b-4a18-b8aa-35b50dbea235/";break; //404
-            case "10000009":  url = "https://run.mocky.io/v3/17f2e686-a24d-488a-8173-739941957ccc/";break; //
+           // case "10000007":  url = "https://run.mocky.io/v3/d28ba763-b801-44b8-9b4e-4ad7fd5c343f/";break; //500
+            case "10000007":  url = "https://run.mocky.io/v3/ba42ab2b-634d-4d62-a515-19ac3c9a14f1/";break; //
+            //case "10000008":  url = "https://run.mocky.io/v3/e0963687-cb0b-4a18-b8aa-35b50dbea235/";break; //404
+            case "10000008":  url = "https://run.mocky.io/v3/fdc43042-263e-4d0b-9f41-d8ab49461f90/";break; //
+            case "10000009":  url = "https://run.mocky.io/v3/7280a02d-478d-4c3f-8670-da08041a7d32/";break; //
+            case "10000010":  url = "https://run.mocky.io/v3/8ea2be98-25ef-48fa-9c4d-83b2e9f91000/";break; //
             default: url = URL_API_ACADEMICO;
         }
         return url;
