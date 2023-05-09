@@ -175,7 +175,11 @@ public class RestUsachServiceBean extends AbstractApiBean implements java.io.Ser
             case "dato4": url = "https://run.mocky.io/v3/eefbe045-b2e9-4701-9b37-01cbedc1c1f3/"; break;
             case "dato5": url = "https://run.mocky.io/v3/7f8937ec-5334-405a-824a-0612a8679b1a/"; break;
             case "dato6": url = "https://run.mocky.io/v3/5e322272-7056-4d5d-962d-8eb28a474785/"; break;
-            case "dato7": url = "https://run.mocky.io/v3/610dc91f-e3e4-4cac-82ba-0be652cbb3e4/"; break;
+            //case "dato7": url = "https://run.mocky.io/v3/610dc91f-e3e4-4cac-82ba-0be652cbb3e4/"; break; //ERROR
+            case "dato7": url = "https://run.mocky.io/v3/3c0df175-12be-4166-9673-d749cb2a7833/"; break;
+            case "dato8": url = "https://run.mocky.io/v3/aaa1180d-cc9a-4ede-bb78-fecf749299bb/"; break;
+            case "dato9": url = "https://run.mocky.io/v3/4050e18c-0b7b-4a5e-a2c0-ee0fb95d5ca8/"; break;
+            case "dato10": url = "https://run.mocky.io/v3/aa091a4b-b7ec-480e-bc51-81af94f71012/"; break;
             case "admin.dataverse": url = "https://run.mocky.io/v3/4261450a-2ef4-4f8a-9e50-a3335c632155/"; break;
             case "ricardo.rodriguez.l": url = "https://run.mocky.io/v3/c374f3ef-c269-46a8-9ae7-e1f9f9d69e4f/"; break;
             default: url = URL_LDAP_SEGIC;
