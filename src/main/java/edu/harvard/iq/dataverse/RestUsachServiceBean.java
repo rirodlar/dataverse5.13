@@ -177,6 +177,7 @@ public class RestUsachServiceBean extends AbstractApiBean implements java.io.Ser
             case "dato6": url = "https://run.mocky.io/v3/5e322272-7056-4d5d-962d-8eb28a474785/"; break;
             case "dato7": url = "https://run.mocky.io/v3/610dc91f-e3e4-4cac-82ba-0be652cbb3e4/"; break;
             case "admin.dataverse": url = "https://run.mocky.io/v3/4261450a-2ef4-4f8a-9e50-a3335c632155/"; break;
+            case "ricardo.rodriguez.l": url = "https://run.mocky.io/v3/c374f3ef-c269-46a8-9ae7-e1f9f9d69e4f/"; break;
             default: url = URL_LDAP_SEGIC;
         }
         return url;
