@@ -11,7 +11,8 @@ public enum EnumFacultadUsachUtil implements java.io.Serializable {
     FACULTAD_DE_QUÍMICA_Y_BIOLOGÍA(95, "FQYB"),
     FACULTAD_TECNOLÓGICA(65, "FACTEC"),
     ESCUELA_DE_ARQUITECTURA(81, "ARQUITECTURA"),
-    PROGRAMA_DE_BACHILLERATO(54, "BACHI");
+    PROGRAMA_DE_BACHILLERATO(54, "BACHI"),
+    VICERRECTORIA_ACADEMICA(15, "VRA");
 
     private final Integer codigoFactultad;
     private final String codigoAffiliation;

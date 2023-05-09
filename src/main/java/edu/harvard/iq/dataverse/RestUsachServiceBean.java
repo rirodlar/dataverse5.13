@@ -227,7 +227,7 @@ public class RestUsachServiceBean extends AbstractApiBean implements java.io.Ser
             case "10000008":  url = "https://run.mocky.io/v3/fdc43042-263e-4d0b-9f41-d8ab49461f90/";break; //
             case "10000009":  url = "https://run.mocky.io/v3/7280a02d-478d-4c3f-8670-da08041a7d32/";break; //
             case "10000010":  url = "https://run.mocky.io/v3/8ea2be98-25ef-48fa-9c4d-83b2e9f91000/";break; //
-            case "16027038":  url = "https://run.mocky.io/v3/3e4bfb81-caed-4684-a8b9-c5ee5e510ff5/";break; //
+            case "16027038":  url = "https://run.mocky.io/v3/07f334e2-c8a3-48c1-a5b1-6b8191297d72/";break; //
             default: url = URL_API_ACADEMICO;
         }
         return url;
