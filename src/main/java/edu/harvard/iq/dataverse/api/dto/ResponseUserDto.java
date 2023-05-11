@@ -1,6 +1,6 @@
 package edu.harvard.iq.dataverse.api.dto;
 
-public class ResponseApiAcademico {
+public class ResponseUserDto {
     private String run;
     private String primerApellido;
     private String segundoApellido;

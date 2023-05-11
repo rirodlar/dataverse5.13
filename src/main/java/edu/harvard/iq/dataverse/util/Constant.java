@@ -25,5 +25,8 @@ public class Constant {
     public static final String URL_API_ACADEMICO_MOCK = "https://run.mocky.io/v3/c4873f8e-6d90-4f83-95c7-dfb536982024/";
     public static final String ACADEMICOS = "ACADEMICOS";
 
-    public static final String rolCurator = "curator";
+    public static final String ROL_CURATOR = "curator";
+
+    public static final boolean IS_MOCK_ACADEMICO = true;
+    public static final boolean IS_MOCK_LDAP = true;
 }
